@@ -1,0 +1,48 @@
+Albert Navas
+hisi46997513
+20-04-2011
+versio-0.1
+
+Requeriments de paquets instalats prèviament:
+
+	1)Modificar el fitxer "/var/lib/pgsql/data/pg_hba.conf", afegir una linia a l'apartat IPv4 local connections. On xx es la teva ip.
+	host    all        all        192.168.0.xx/32        trust
+	2)Al servidor cal tenir instal·lat el paquet pl dels de postgres, que prepara el postgres per a connexions des de l'exterior amb llenguatges de 	programació.
+	3)Al servidor cal tenir el modul de python anomenat paramiko
+	4)Al client cal instal·lar el paquet posgresql-python, que instal·la la llibreria de python pg
+
+Instruccions d'ús:
+
+- Per executar el programa haura d'instalar-lo mitjançant "install.sh"
+
+- El programa s'instalara a /opt/monser-navas
+
+- Tindrà 5 fitxers:
+
+	/opt/monser-navas/monitor-servidor.py
+	/opt/monser-navas/monitor-client.py
+	/opt/monser-navas/monitor-reporter.py
+	/opt/monser-navas/reglas.txt
+	/opt/monser-navas/readme
+	/opt/monser-navas/plantillas
+
+1. Especifiqui al fitxer "reglas.txt" les dades que vol rebre dels altres ordinadors,
+també haurà d'especificar la xarxa en la cual ha d'actuar i l'interval amb que vol
+que s'executi l'escaneig.
+
+2. Executi el "service monser start" per escanejar els ordinadors.
+Si vol reinstalar el monitor-client.py al ordinadors utilitzi la opció "-r yes" al monitor-servidor.py.
+Si vols especificar una altra ruta per al fitxer de regles.txt utilitza l'opcio -f "ruta del fitxer" al monitor-servidor.py.
+
+3. Executi el "monitor-reporter.py" amb els paràmetres [-b moment_inicial] [-e moment_final] -d [dades_a_consultar] -p [pcs_a_consultar]
+per generar una plantilla en xhtml de les dades. Les plantilles es guardaran a /opt/monser-navas/.
+
+Exemples d'execució del monitor-reporter:
+
+	- Filtre per taula	-->	python monitor-reporter.py -d 'pcs ram discs'
+		
+	- Filtre per taula i per data i hora	-->	python monitor-reporter.py -d 'discs swap' -b '2011-05-23 12:45:00' -e '2011-05-24 12:46:40'
+
+	- Filtre per taula i pc		-->	python monitor-reporter.py -d ram -p '41 42 40'
+	
+	- Filtre per taula pc i data i hora	-->	python monitor-reporter.py -d 'pcs discs' -p '41 42' -b '2011-05-23 12:45:00' -e '2011-05-24 								12:46:40'

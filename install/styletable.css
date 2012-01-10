@@ -1,0 +1,39 @@
+/*Albert Navas Mallo
+  hisi46997513*/
+table {
+  border-collapse: collapse;
+  border: 1px solid #03476F;
+  font: normal 16px arial, helvetica, sans-serif;
+  color: #363636;
+  background: #92C428;
+  }
+  
+caption {
+  text-align: center;
+  font: bold 18px arial, helvetica, sans-serif;
+  background: transparent;
+  padding:6px 4px 8px 0px;
+  color: #03476F;
+  text-transform: uppercase;
+  }
+  
+td, th {
+  border: 1px dotted #03476F;
+  padding: .4em;
+  color: #363636;
+  }
+
+tbody tr:hover {
+  background: #FFD800;
+  border: 1px solid #03476F;
+  color: #FFFFFF;
+  }
+  
+tbody tr:hover th,
+tbody tr.odd:hover th {
+  background: #FFD800;
+  }
+
+th:hover {
+  background: black;
+}

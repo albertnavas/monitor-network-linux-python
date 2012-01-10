@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# Albert Navas Mallo
+# hisi46997513
+#
+# chkconfig: - 85 15
+# description: Engega el monitor-servidor
+# processname: monser-navas
+# config: /opt/monser-navas/reglas.txt
+# pidfile: /var/run/monser.pid           
+
+# Funcions
+. /etc/rc.d/init.d/functions
+
+# Ruta i pidfile
+monser="/opt/monser-navas/monitor-servidor.py &"
+pidfile=${PIDFILE-/var/run/monser.pid}
+lockfile=${LOCKFILE-/var/lock/subsys/monser}
+RETVAL=0
+
+#Starting monser
+start() {
+        echo -n $"Starting monser: "
+        daemon $monser
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] && touch $lockfile
+        return $RETVAL
+}
+
+#Stopping monser
+stop() {
+		echo -n $"Stopping monser: "
+		killproc monser
+		RETVAL=$?
+		echo
+		[ $RETVAL = 0 ] && rm -f $lockfile $pidfile
+		return $RETVAL
+}
+
+#Reloading monser
+reload() {
+		echo -n $"Reloading monser: "
+		killproc monser -HUP
+		RETVAL=$?
+		echo
+		return $RETVAL
+}
+
+# Opcions
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  status)
+		status -p ${pidfile} $monser
+	RETVAL=$?
+	;;
+  restart)
+	stop
+	start
+	;;
+  reload)
+        reload
+	;;
+  *)
+	echo $"Usage: $prog {start|stop|status|restart|reload}"
+	RETVAL=3
+esac
+
+exit $RETVA
